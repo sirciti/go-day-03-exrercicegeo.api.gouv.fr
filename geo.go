@@ -8,18 +8,20 @@ import (
 	"os"
 )
 
+// Variable pour l'URL de base de l'API (utilisé pour la production ou pour le test)
+var baseURL = "http://api.openweathermap.org/geo/1.0/direct"
+
 // Structure pour stocker les coordonnées d'une ville
 type Location struct {
-	Name      string  `json:"name"`
-	Lat       float64 `json:"lat"`
-	Lon       float64 `json:"lon"`
-	Country   string  `json:"country"`
-	State     string  `json:"state"`
+	Name    string  `json:"name"`
+	Lat     float64 `json:"lat"`
+	Lon     float64 `json:"lon"`
+	Country string  `json:"country"`
+	State   string  `json:"state"`
 }
 
 // Fonction pour obtenir les coordonnées d'une ville
-func getCoordinates(city string, apiKey string) ([]Location, error) {
-	baseURL := "http://api.openweathermap.org/geo/1.0/direct"
+func getCoordinates(city string, apiKey string, baseURL string) ([]Location, error) {
 	params := url.Values{}
 	params.Add("q", city)
 	params.Add("limit", "1")      // Limite à un résultat
@@ -56,7 +58,7 @@ func main() {
 	apiKey := "c732a4f732342956ec521490b59a7dce"
 
 	// Appel de la fonction pour obtenir les coordonnées
-	locations, err := getCoordinates(city, apiKey)
+	locations, err := getCoordinates(city, apiKey, baseURL)
 	if err != nil {
 		fmt.Println("Erreur :", err)
 		os.Exit(1)
